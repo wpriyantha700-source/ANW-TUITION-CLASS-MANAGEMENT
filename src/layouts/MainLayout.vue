@@ -1,20 +1,142 @@
 <template>
   <q-layout view="lHh Lpr lFf">
-    <q-header elevated>
-      <q-toolbar>
-        <q-btn flat dense round icon="menu" aria-label="Menu" @click="toggleLeftDrawer" />
+    <q-header class="bg-white text-black bordered-bottom" height-hint="98">
+      <q-toolbar class="q-py-sm q-px-md">
+        <!-- Mobile Menu Button (Visible only on small screens) -->
+        <q-btn
+          flat
+          dense
+          round
+          icon="menu"
+          aria-label="Menu"
+          class="lt-md q-mr-sm"
+          @click="toggleLeftDrawer"
+        />
 
-        <q-toolbar-title> Quasar App </q-toolbar-title>
+        <!-- Brand Logo / Name -->
+        <q-toolbar-title class="text-weight-bolder text-h6 text-md-h5" style="letter-spacing: -1px">
+          ANW <span class="text-grey-7">SYSTEMS</span>
+        </q-toolbar-title>
 
-        <div>Quasar v{{ $q.version }}</div>
+        <!-- Desktop Navigation (Hidden on small screens) -->
+        <div class="gt-sm q-gutter-x-md">
+          <q-btn flat no-caps label="Home" class="text-weight-bold" to="/" />
+          <q-btn
+            flat
+            no-caps
+            label="Features"
+            class="text-weight-medium text-grey-8"
+            to="/#features"
+          />
+          <q-btn
+            flat
+            no-caps
+            label="About Us"
+            class="text-weight-medium text-grey-8"
+            to="/#about"
+          />
+          <q-btn
+            flat
+            no-caps
+            label="Contact"
+            class="text-weight-medium text-grey-8"
+            to="/#contact"
+          />
+        </div>
+
+        <q-space />
+
+        <!-- Auth Buttons -->
+        <div class="q-gutter-x-sm row items-center">
+          <q-btn flat no-caps label="Log In" class="text-weight-bold" color="black" to="/login" />
+          <q-btn
+            unelevated
+            rounded
+            no-caps
+            label="Register"
+            class="bg-black text-white text-weight-bold q-px-md q-px-md-lg"
+            to="/register"
+          />
+        </div>
       </q-toolbar>
+
+      <!-- Mobile Navigation Row (Visible only on small screens) -->
+      <div class="lt-md row justify-center q-pb-sm q-gutter-x-sm">
+        <q-btn flat no-caps label="Home" class="text-weight-bold" to="/" dense />
+        <q-btn
+          flat
+          no-caps
+          label="Features"
+          class="text-weight-medium text-grey-8"
+          to="/#features"
+          dense
+        />
+        <q-btn
+          flat
+          no-caps
+          label="About Us"
+          class="text-weight-medium text-grey-8"
+          to="/#about"
+          dense
+        />
+        <q-btn
+          flat
+          no-caps
+          label="Contact"
+          class="text-weight-medium text-grey-8"
+          to="/#contact"
+          dense
+        />
+      </div>
     </q-header>
 
-    <q-drawer v-model="leftDrawerOpen" show-if-above bordered>
-      <q-list>
-        <q-item-label header> Essential Links </q-item-label>
+    <!-- Mobile Drawer -->
+    <q-drawer
+      v-model="leftDrawerOpen"
+      bordered
+      overlay
+      behavior="mobile"
+      class="bg-white text-black"
+    >
+      <q-list padding class="text-weight-medium">
+        <q-item-label header class="text-grey-8">Menu</q-item-label>
 
-        <EssentialLink v-for="link in linksList" :key="link.title" v-bind="link" />
+        <q-item clickable v-ripple to="/">
+          <q-item-section avatar>
+            <q-icon name="home" />
+          </q-item-section>
+          <q-item-section>Home</q-item-section>
+        </q-item>
+
+        <q-item clickable v-ripple to="/#features">
+          <q-item-section avatar>
+            <q-icon name="star" />
+          </q-item-section>
+          <q-item-section>Features</q-item-section>
+        </q-item>
+
+        <q-item clickable v-ripple to="/#about">
+          <q-item-section avatar>
+            <q-icon name="info" />
+          </q-item-section>
+          <q-item-section>About Us</q-item-section>
+        </q-item>
+
+        <q-item clickable v-ripple to="/#contact">
+          <q-item-section avatar>
+            <q-icon name="phone" />
+          </q-item-section>
+          <q-item-section>Contact</q-item-section>
+        </q-item>
+
+        <q-separator class="q-my-md" />
+
+        <q-item clickable v-ripple to="/login">
+          <q-item-section avatar>
+            <q-icon name="login" />
+          </q-item-section>
+          <q-item-section>Log In</q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 
@@ -26,52 +148,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import EssentialLink from 'components/EssentialLink.vue'
-
-const linksList = [
-  {
-    title: 'Docs',
-    caption: 'quasar.dev',
-    icon: 'school',
-    link: 'https://quasar.dev',
-  },
-  {
-    title: 'Github',
-    caption: 'github.com/quasarframework',
-    icon: 'code',
-    link: 'https://github.com/quasarframework',
-  },
-  {
-    title: 'Discord Chat Channel',
-    caption: 'chat.quasar.dev',
-    icon: 'chat',
-    link: 'https://chat.quasar.dev',
-  },
-  {
-    title: 'Forum',
-    caption: 'forum.quasar.dev',
-    icon: 'record_voice_over',
-    link: 'https://forum.quasar.dev',
-  },
-  {
-    title: 'Twitter',
-    caption: '@quasarframework',
-    icon: 'rss_feed',
-    link: 'https://twitter.quasar.dev',
-  },
-  {
-    title: 'Facebook',
-    caption: '@QuasarFramework',
-    icon: 'public',
-    link: 'https://facebook.quasar.dev',
-  },
-  {
-    title: 'Quasar Awesome',
-    caption: 'Community Quasar projects',
-    icon: 'favorite',
-    link: 'https://awesome.quasar.dev',
-  },
-]
 
 const leftDrawerOpen = ref(false)
 
@@ -79,3 +155,11 @@ function toggleLeftDrawer() {
   leftDrawerOpen.value = !leftDrawerOpen.value
 }
 </script>
+
+<style scoped>
+.bordered-bottom {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(10px);
+  background-color: rgba(255, 255, 255, 0.9) !important;
+}
+</style>
